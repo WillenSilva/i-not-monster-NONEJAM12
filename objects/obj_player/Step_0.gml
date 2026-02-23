@@ -1,0 +1,2 @@
+checa_chao();
+plataforma();
