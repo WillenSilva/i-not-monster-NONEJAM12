@@ -1,4 +1,4 @@
-
-
+if(keyboard_check(ord("R"))) room_restart();
     
-trocamundo();
+
+show_debug_message(global.colisores)
