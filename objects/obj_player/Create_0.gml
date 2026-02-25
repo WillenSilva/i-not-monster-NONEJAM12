@@ -8,6 +8,12 @@ maxvel = 5;
 //PLATAFORMA
 chao = noone;
 
+//MAQUINA DE ESTADO
+estado = noone
+estado_txt = "parado";
+tempo_humano = global.tempo * 5;
+sou_humano = tempo_humano
+human = false;
 
 //CONTROLES
 jump  = false;
@@ -16,6 +22,8 @@ right = false;
 up    = false;
 down  = false;
 
+
+#region //MECANICAS E FUNÇÕES
 
 checa_chao = function (){
   
@@ -57,7 +65,6 @@ plataforma = function (){
     
     move_and_collide(velh,0,global.colisores,4);
     move_and_collide(0,velv,global.colisores,24);
-    
 }
 
 empurra_caixa = function (){
@@ -115,3 +122,61 @@ quebra_porta =  function (){
         }
 }
 }
+
+#endregion
+
+#region //MAQUINA DE ESTADO
+
+parado = function (){
+    
+    //CORPO ESTADO
+    estado_txt = "parado"
+    velh = 0;
+    plataforma();
+    
+    //SAIDA ESTADO
+    if(left or right ) estado = andando;
+    if(jump) estado = pulando;
+}
+andando = function (){
+    
+    //CORPO ESTADO
+    estado_txt = "andando"
+    plataforma();
+    
+    //SAIDA ESTADO
+    if(velh == 0 )estado = parado;
+        if(jump) estado = pulando;
+}
+
+pulando = function (){
+    
+    //CORPO ESTADO
+    estado_txt = "pulando"
+    plataforma();
+    
+    //SAIDA ESTADO
+    if(chao) estado = parado;
+}
+
+agachado = function (){
+    
+    //CORPO ESTADO
+    estado_txt = "agachado"
+    
+    //SAIDA ESTADO
+    estado = parado;
+}
+
+transforma = function (){
+    
+    //CORPO ESTADO
+    estado_txt = "transforma"
+    
+    //SAIDA ESTADO
+    estado = parado;
+}
+
+estado = parado;
+
+#endregion

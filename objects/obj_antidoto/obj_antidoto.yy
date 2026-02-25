@@ -1,13 +1,9 @@
 {
   "$GMObject":"",
-  "%Name":"obj_player",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "%Name":"obj_antidoto",
+  "eventList":[],
   "managed":true,
-  "name":"obj_player",
+  "name":"obj_antidoto",
   "overriddenProperties":[],
   "parent":{
     "name":"Objetos",
@@ -32,8 +28,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_player",
-    "path":"sprites/spr_player/spr_player.yy",
+    "name":"spr_antidoto",
+    "path":"sprites/spr_antidoto/spr_antidoto.yy",
   },
   "spriteMaskId":null,
   "visible":true,

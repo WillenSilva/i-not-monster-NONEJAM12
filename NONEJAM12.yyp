@@ -23,6 +23,7 @@
   "name":"NONEJAM12",
   "resources":[
     {"id":{"name":"obj_action","path":"objects/obj_action/obj_action.yy",},},
+    {"id":{"name":"obj_antidoto","path":"objects/obj_antidoto/obj_antidoto.yy",},},
     {"id":{"name":"obj_boxx","path":"objects/obj_boxx/obj_boxx.yy",},},
     {"id":{"name":"obj_colisor","path":"objects/obj_colisor/obj_colisor.yy",},},
     {"id":{"name":"obj_control","path":"objects/obj_control/obj_control.yy",},},
@@ -32,6 +33,7 @@
     {"id":{"name":"rm_mundo","path":"rooms/rm_mundo/rm_mundo.yy",},},
     {"id":{"name":"rm_outro","path":"rooms/rm_outro/rm_outro.yy",},},
     {"id":{"name":"spr_action","path":"sprites/spr_action/spr_action.yy",},},
+    {"id":{"name":"spr_antidoto","path":"sprites/spr_antidoto/spr_antidoto.yy",},},
     {"id":{"name":"spr_box","path":"sprites/spr_box/spr_box.yy",},},
     {"id":{"name":"spr_colisor","path":"sprites/spr_colisor/spr_colisor.yy",},},
     {"id":{"name":"spr_hit","path":"sprites/spr_hit/spr_hit.yy",},},
