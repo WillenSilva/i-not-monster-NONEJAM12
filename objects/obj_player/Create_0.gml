@@ -7,6 +7,8 @@ maxvel = 5;
 
 //PLATAFORMA
 chao = noone;
+col  = noone;
+colv  = noone;
 
 //MAQUINA DE ESTADO
 estado = noone
@@ -65,18 +67,19 @@ pega_controle = function() {
 plataforma = function (){
     checa_chao();
     pega_controle();
+    
     velh = (right - left) * maxvel
     
     if(jump && chao && human)velv -= maxvel* 2;
         
      if (agacha && human && chao) estado = agachado;
     
-    move_and_collide(velh,0,global.colisores,24);
-    move_and_collide(0,velv,global.colisores,24);
+    move_and_collide(velh,0,obj_colisor,12);
+    move_and_collide(0,velv,obj_colisor,12);
 }
 
 empurra_caixa = function (){
-     pega_controle();
+     
     //detecta caixa na frente
     var _caixa = instance_place(x + velh,y,obj_boxx);
     
@@ -94,11 +97,6 @@ empurra_caixa = function (){
     
 if (_caixa != noone)
 {
-    bbox_right
-    
-    //checando se a caixa pode se mexer
-    if(!place_meeting(_caixa.x + _caixa.velh, _caixa.y + _caixa.velv, obj_colisor ))
-    {
     
         // MOVENDO A CAIXA SE ELA NÃO ESTIVER TRAVADA, E EU FOR UM MONSTRO
         if(place_meeting(x, y, obj_boxx) && place_meeting(x, y+1, obj_colisor) && _caixa.travado == false)
@@ -106,18 +104,7 @@ if (_caixa != noone)
             _caixa.velh = velh
         }
     
-    }
-    else{
-        _caixa.velh = 0;
-        velh = 0;
-    }
-        
-   
-      
-    
 }
-
-    
 }
 
 quebra_porta =  function (){
@@ -173,11 +160,11 @@ parado = function (){
     //CORPO ESTADO
     estado_txt = "parado"
     velh = 0;
-    plataforma();
+    
     coleta_antidoto();
     checha_tranformado();
     empurra_caixa();
-    
+    plataforma();
     
     //SAIDA ESTADO
     if(left or right ) estado = andando;
@@ -188,10 +175,10 @@ andando = function (){
     
     //CORPO ESTADO
     estado_txt = "andando"
-    plataforma();
     coleta_antidoto();
-    checha_tranformado()
+    checha_tranformado();
     empurra_caixa();
+    plataforma();
     
     //SAIDA ESTADO
     if(velh == 0 )estado = parado;
@@ -202,10 +189,10 @@ pulando = function (){
     
     //CORPO ESTADO
     estado_txt = "pulando"
-    plataforma();
-    coleta_antidoto();
-    checha_tranformado()
+   coleta_antidoto();
+    checha_tranformado();
     empurra_caixa();
+    plataforma();
     
     //SAIDA ESTADO
     if(chao) estado = parado;
