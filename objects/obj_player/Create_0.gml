@@ -7,8 +7,7 @@ maxvel = 5;
 
 //PLATAFORMA
 chao = noone;
-col  = noone;
-colv  = noone;
+
 
 //MAQUINA DE ESTADO
 estado = noone
@@ -23,6 +22,10 @@ left  = false;
 right = false;
 up    = false;
 down  = false;
+action = false;
+agacha = false;
+
+//ANIMAÇÃO E SPRITES
 
 
 #region //MECANICAS E FUNÇÕES
@@ -55,13 +58,13 @@ checa_chao = function (){
 
 pega_controle = function() {
     
-    jump = keyboard_check(vk_space);
-    left = keyboard_check(ord("A"));
-    up = keyboard_check(ord("W"));
-    down = keyboard_check(ord("S"));
-    right = keyboard_check(ord("D"));
-    action = keyboard_check(ord("E"))
-    agacha = keyboard_check(ord("G"))
+    jump    = keyboard_check(vk_space);
+    left    = keyboard_check(ord("A"));
+    up      = keyboard_check(ord("W"));
+    down    = keyboard_check(ord("S"));
+    right   = keyboard_check(ord("D"));
+    action  = keyboard_check(ord("E"))
+    agacha  = keyboard_check(ord("G"))
 }
 
 plataforma = function (){
@@ -70,9 +73,14 @@ plataforma = function (){
     
     velh = (right - left) * maxvel
     
-    if(jump && chao && human)velv -= maxvel* 2;
+    if(jump && chao && human)velv -= maxvel ;
         
-     if (agacha && human && chao) estado = agachado;
+    if (agacha && human && chao) estado = agachado;
+    
+    
+    
+    if(velh > 0) image_xscale = 1;
+    if(velh < 0) image_xscale = -1;
     
     move_and_collide(velh,0,obj_colisor,12);
     move_and_collide(0,velv,obj_colisor,12);
@@ -99,7 +107,7 @@ if (_caixa != noone)
 {
     
         // MOVENDO A CAIXA SE ELA NÃO ESTIVER TRAVADA, E EU FOR UM MONSTRO
-        if(place_meeting(x, y, obj_boxx) && place_meeting(x, y+1, obj_colisor) && _caixa.travado == false)
+        if(place_meeting(x, y, obj_boxx) && place_meeting(x, y+1, obj_colisor) && _caixa.travado == false && !human)
         {
             _caixa.velh = velh
         }
@@ -110,12 +118,19 @@ if (_caixa != noone)
 quebra_porta =  function (){
     pega_controle();
     if(action and !human){
+        
     var _dir    = point_direction(x,y,x + velh,y)    
-    var _hit_box = instance_create_layer(x + velh,y, "Instances", obj_hit);
-    
+    var _hit_box = instance_create_layer(x,y - 32, "Instances", obj_hit);
+    if (velh > 0) _hit_box.image_xscale = 1;
+    if (velh < 0) _hit_box.image_xscale = -1;
+        
     with (_hit_box) {
     	 var _porta = instance_place(x,y,obj_porta);
-        if(_porta != noone) _porta.dura = 0;
+        if(_porta != noone) {
+            _porta.dura = 0;
+            
+        }
+        
         }
 }
 }
@@ -161,9 +176,11 @@ parado = function (){
     estado_txt = "parado"
     velh = 0;
     
+    
     coleta_antidoto();
     checha_tranformado();
     empurra_caixa();
+    quebra_porta()
     plataforma();
     
     //SAIDA ESTADO
@@ -178,6 +195,7 @@ andando = function (){
     coleta_antidoto();
     checha_tranformado();
     empurra_caixa();
+    quebra_porta()
     plataforma();
     
     //SAIDA ESTADO
@@ -189,9 +207,8 @@ pulando = function (){
     
     //CORPO ESTADO
     estado_txt = "pulando"
-   coleta_antidoto();
+    coleta_antidoto();
     checha_tranformado();
-    empurra_caixa();
     plataforma();
     
     //SAIDA ESTADO
@@ -207,8 +224,11 @@ agachado = function (){
     checha_tranformado();
     
     //SAIDA ESTADO
+    if (agacha) {
+    	estado = parado;
+    }
     
-    if (!human or agacha) {
+    if (!human) {
     	estado = parado;
     }
     
