@@ -31,12 +31,13 @@
     {"id":{"name":"obj_player","path":"objects/obj_player/obj_player.yy",},},
     {"id":{"name":"obj_porta","path":"objects/obj_porta/obj_porta.yy",},},
     {"id":{"name":"rm_mundo","path":"rooms/rm_mundo/rm_mundo.yy",},},
-    {"id":{"name":"rm_outro","path":"rooms/rm_outro/rm_outro.yy",},},
     {"id":{"name":"spr_action","path":"sprites/spr_action/spr_action.yy",},},
     {"id":{"name":"spr_antidoto","path":"sprites/spr_antidoto/spr_antidoto.yy",},},
     {"id":{"name":"spr_box","path":"sprites/spr_box/spr_box.yy",},},
     {"id":{"name":"spr_colisor","path":"sprites/spr_colisor/spr_colisor.yy",},},
     {"id":{"name":"spr_hit","path":"sprites/spr_hit/spr_hit.yy",},},
+    {"id":{"name":"spr_monstro","path":"sprites/spr_monstro/spr_monstro.yy",},},
+    {"id":{"name":"spr_player_agachado","path":"sprites/spr_player_agachado/spr_player_agachado.yy",},},
     {"id":{"name":"spr_player","path":"sprites/spr_player/spr_player.yy",},},
     {"id":{"name":"spr_porta","path":"sprites/spr_porta/spr_porta.yy",},},
   ],
@@ -44,7 +45,6 @@
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
     {"roomId":{"name":"rm_mundo","path":"rooms/rm_mundo/rm_mundo.yy",},},
-    {"roomId":{"name":"rm_outro","path":"rooms/rm_outro/rm_outro.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[

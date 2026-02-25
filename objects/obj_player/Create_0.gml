@@ -11,7 +11,7 @@ chao = noone;
 //MAQUINA DE ESTADO
 estado = noone
 estado_txt = "parado";
-tempo_humano = global.tempo * 5;
+tempo_humano = game_get_speed(gamespeed_fps) * 5
 sou_humano = tempo_humano
 human = false;
 
@@ -27,6 +27,12 @@ down  = false;
 
 checa_chao = function (){
   
+    
+    if (place_meeting(x,y,obj_colisor))
+        {
+    	 room_restart();
+        }
+    
    if(place_meeting(x,y + 1, obj_colisor)) chao = true;
     else{
         chao = false;
@@ -53,6 +59,7 @@ pega_controle = function() {
     down = keyboard_check(ord("S"));
     right = keyboard_check(ord("D"));
     action = keyboard_check(ord("E"))
+    agacha = keyboard_check(ord("G"))
 }
 
 plataforma = function (){
@@ -60,10 +67,11 @@ plataforma = function (){
     pega_controle();
     velh = (right - left) * maxvel
     
-    if(jump && chao)velv -= maxvel* 2;
-   
+    if(jump && chao && human)velv -= maxvel* 2;
+        
+     if (agacha && human && chao) estado = agachado;
     
-    move_and_collide(velh,0,global.colisores,4);
+    move_and_collide(velh,0,global.colisores,24);
     move_and_collide(0,velv,global.colisores,24);
 }
 
@@ -71,7 +79,7 @@ empurra_caixa = function (){
      pega_controle();
     //detecta caixa na frente
     var _caixa = instance_place(x + velh,y,obj_boxx);
-  
+    
     if(!place_meeting(x,y+1, obj_boxx))
     {
         velv += grav
@@ -86,12 +94,14 @@ empurra_caixa = function (){
     
 if (_caixa != noone)
 {
+    bbox_right
+    
     //checando se a caixa pode se mexer
     if(!place_meeting(_caixa.x + _caixa.velh, _caixa.y + _caixa.velv, obj_colisor ))
     {
     
-        // Verifica se a caixa pode se mover
-        if(place_meeting(x + velh , y, obj_boxx) && place_meeting(x, y+1, obj_colisor) && _caixa.travado == false)
+        // MOVENDO A CAIXA SE ELA NÃO ESTIVER TRAVADA, E EU FOR UM MONSTRO
+        if(place_meeting(x, y, obj_boxx) && place_meeting(x, y+1, obj_colisor) && _caixa.travado == false)
         {
             _caixa.velh = velh
         }
@@ -112,7 +122,7 @@ if (_caixa != noone)
 
 quebra_porta =  function (){
     pega_controle();
-    if(action){
+    if(action and !human){
     var _dir    = point_direction(x,y,x + velh,y)    
     var _hit_box = instance_create_layer(x + velh,y, "Instances", obj_hit);
     
@@ -121,6 +131,37 @@ quebra_porta =  function (){
         if(_porta != noone) _porta.dura = 0;
         }
 }
+}
+
+coleta_antidoto = function (){
+    var _anti = instance_place(x + velh, y + 1, obj_antidoto)
+    
+    if (_anti and !human) {
+    	with (_anti) {
+            instance_destroy(id)
+        }
+        estado = transforma;
+    }
+    
+}
+
+checha_tranformado = function (){
+    if (human == true) {
+    	sou_humano--;
+        
+        if(sou_humano <= 0){
+            sprite_index = spr_monstro;
+            human = false;
+            sou_humano = tempo_humano;
+            
+        }
+         
+    }
+    else {
+    	sprite_index = spr_player
+    }
+    
+    
 }
 
 #endregion
@@ -133,20 +174,28 @@ parado = function (){
     estado_txt = "parado"
     velh = 0;
     plataforma();
+    coleta_antidoto();
+    checha_tranformado();
+    empurra_caixa();
+    
     
     //SAIDA ESTADO
     if(left or right ) estado = andando;
-    if(jump) estado = pulando;
+    if(jump && human) estado = pulando;
 }
+
 andando = function (){
     
     //CORPO ESTADO
     estado_txt = "andando"
     plataforma();
+    coleta_antidoto();
+    checha_tranformado()
+    empurra_caixa();
     
     //SAIDA ESTADO
     if(velh == 0 )estado = parado;
-        if(jump) estado = pulando;
+        if(jump and human) estado = pulando;
 }
 
 pulando = function (){
@@ -154,6 +203,9 @@ pulando = function (){
     //CORPO ESTADO
     estado_txt = "pulando"
     plataforma();
+    coleta_antidoto();
+    checha_tranformado()
+    empurra_caixa();
     
     //SAIDA ESTADO
     if(chao) estado = parado;
@@ -163,15 +215,29 @@ agachado = function (){
     
     //CORPO ESTADO
     estado_txt = "agachado"
+    sprite_index = spr_player_agachado
+    plataforma();
+    checha_tranformado();
     
     //SAIDA ESTADO
-    estado = parado;
+    
+    if (!human or agacha) {
+    	estado = parado;
+    }
+    
 }
 
 transforma = function (){
     
     //CORPO ESTADO
     estado_txt = "transforma"
+    sprite_index = spr_monstro;
+    //animação de transformação
+    // ao fim dela  human = true
+    //inicia cronometro
+    // pode andar
+    //pode pular
+    human = true;
     
     //SAIDA ESTADO
     estado = parado;
