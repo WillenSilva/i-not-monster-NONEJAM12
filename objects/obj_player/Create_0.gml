@@ -1,9 +1,10 @@
 //MOVIMETO
-velh = 0;
-velv = 0;
-acel = 0.5
-grav = 0
-maxvel = 5;
+velh    = 0;
+velv    = 0;
+acel    = 0.5
+grav    = 0
+maxvel  = 5;
+forc    = 2
 
 //PLATAFORMA
 chao = noone;
@@ -46,7 +47,7 @@ checa_chao = function (){
     
     
       if(!chao){
-        grav = 0.2;
+        grav = 0.4;
         velv += grav;
         
     }else {
@@ -58,7 +59,7 @@ checa_chao = function (){
 
 pega_controle = function() {
     
-    jump    = keyboard_check(vk_space);
+    jump    = keyboard_check_pressed(vk_space);
     left    = keyboard_check(ord("A"));
     up      = keyboard_check(ord("W"));
     down    = keyboard_check(ord("S"));
@@ -73,7 +74,7 @@ plataforma = function (){
     
     velh = (right - left) * maxvel
     
-    if(jump && chao && human)velv -= maxvel ;
+    if(jump && chao && human)velv -= maxvel * forc ;
         
     if (agacha && human && chao) estado = agachado;
     
@@ -105,12 +106,12 @@ empurra_caixa = function (){
     
 if (_caixa != noone)
 {
-    
         // MOVENDO A CAIXA SE ELA NÃO ESTIVER TRAVADA, E EU FOR UM MONSTRO
-        if(place_meeting(x, y, obj_boxx) && place_meeting(x, y+1, obj_colisor) && _caixa.travado == false && !human)
+        if(place_meeting(x + velh, y, obj_boxx) && place_meeting(x, y+1, obj_colisor) && _caixa.travado == false && !human)
         {
             _caixa.velh = velh
         }
+          
     
 }
 }

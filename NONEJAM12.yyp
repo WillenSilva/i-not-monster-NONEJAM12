@@ -30,6 +30,7 @@
     {"id":{"name":"obj_hit","path":"objects/obj_hit/obj_hit.yy",},},
     {"id":{"name":"obj_player","path":"objects/obj_player/obj_player.yy",},},
     {"id":{"name":"obj_porta","path":"objects/obj_porta/obj_porta.yy",},},
+    {"id":{"name":"rm_fase0","path":"rooms/rm_fase0/rm_fase0.yy",},},
     {"id":{"name":"rm_mundo","path":"rooms/rm_mundo/rm_mundo.yy",},},
     {"id":{"name":"spr_action","path":"sprites/spr_action/spr_action.yy",},},
     {"id":{"name":"spr_antidoto","path":"sprites/spr_antidoto/spr_antidoto.yy",},},
@@ -44,6 +45,7 @@
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
+    {"roomId":{"name":"rm_fase0","path":"rooms/rm_fase0/rm_fase0.yy",},},
     {"roomId":{"name":"rm_mundo","path":"rooms/rm_mundo/rm_mundo.yy",},},
   ],
   "templateType":"game",
