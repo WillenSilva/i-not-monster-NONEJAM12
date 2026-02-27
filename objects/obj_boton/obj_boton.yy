@@ -1,13 +1,13 @@
 {
   "$GMObject":"",
-  "%Name":"obj_colisor",
+  "%Name":"obj_boton",
   "eventList":[],
   "managed":true,
-  "name":"obj_colisor",
+  "name":"obj_boton",
   "overriddenProperties":[],
   "parent":{
-    "name":"OBJETOS",
-    "path":"folders/Objetos/OBJETOS.yy",
+    "name":"MENU",
+    "path":"folders/Objetos/MENU.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -28,8 +28,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_colisor",
-    "path":"sprites/spr_colisor/spr_colisor.yy",
+    "name":"spr_botao",
+    "path":"sprites/spr_botao/spr_botao.yy",
   },
   "spriteMaskId":null,
   "visible":true,

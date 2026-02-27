@@ -31,8 +31,8 @@
   ],
   "name":"rm_mundo",
   "parent":{
-    "name":"NONEJAM12",
-    "path":"NONEJAM12.yyp",
+    "name":"Rooms",
+    "path":"folders/Rooms.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

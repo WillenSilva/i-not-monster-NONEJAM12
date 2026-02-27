@@ -8,8 +8,8 @@
   "name":"obj_action",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objetos",
-    "path":"folders/Objetos.yy",
+    "name":"OBJETOS",
+    "path":"folders/Objetos/OBJETOS.yy",
   },
   "parentObjectId":null,
   "persistent":false,

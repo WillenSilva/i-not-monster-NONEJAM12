@@ -1,0 +1,1 @@
+if(room_atual == rm_menu) desenha_menu();

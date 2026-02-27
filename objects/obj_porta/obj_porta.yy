@@ -9,8 +9,8 @@
   "name":"obj_porta",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objetos",
-    "path":"folders/Objetos.yy",
+    "name":"OBJETOS",
+    "path":"folders/Objetos/OBJETOS.yy",
   },
   "parentObjectId":{
     "name":"obj_colisor",

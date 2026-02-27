@@ -27,9 +27,34 @@ action = false;
 agacha = false;
 
 //ANIMAÇÃO E SPRITES
-
+sprites = [
+     //SPRITE PARADO
+    [spr_player_idle,spr_monstro_idle],
+    //SSPRITE ANDANDO 
+    [spr_player_idle,spr_monstro_idle],
+    //SPRITE AGACHADO
+    [0,spr_player_agachado],
+    //SPRITE PULANDO
+    [spr_player_idle,spr_monstro_idle],
+    //SPRITE TRANFORMAÇÃO
+    [spr_player_idle,spr_monstro_idle]
+                                    ];
+sprite  = noone
 
 #region //MECANICAS E FUNÇÕES
+
+controla_sprite = function (_index){
+    //muda a sprite de acordo com o estado
+    //variaveis de controle
+    var _spr_modo = human
+    
+     if(velh > 0) image_xscale = 1;
+     if(velh < 0) image_xscale = -1;
+        
+    sprite = sprites[_index,_spr_modo]
+    
+    sprite_index = sprite;
+}
 
 checa_chao = function (){
   
@@ -65,7 +90,7 @@ pega_controle = function() {
     down    = keyboard_check(ord("S"));
     right   = keyboard_check(ord("D"));
     action  = keyboard_check(ord("E"))
-    agacha  = keyboard_check(ord("G"))
+    agacha  = keyboard_check_pressed(ord("G"))
 }
 
 plataforma = function (){
@@ -74,17 +99,19 @@ plataforma = function (){
     
     velh = (right - left) * maxvel
     
-    if(jump && chao && human)velv -= maxvel * forc ;
+    if(jump && chao && human && estado != agachado)velv -= maxvel * forc ;
         
     if (agacha && human && chao) estado = agachado;
     
     
-    
-    if(velh > 0) image_xscale = 1;
-    if(velh < 0) image_xscale = -1;
-    
-    move_and_collide(velh,0,obj_colisor,12);
-    move_and_collide(0,velv,obj_colisor,12);
+    if (!human) {
+        move_and_collide(velh,0,obj_colisor,12);
+        move_and_collide(0,velv,obj_colisor,12);
+    }
+    else { 
+        move_and_collide(velh,0,all,12);
+        move_and_collide(0,velv,all,12);
+    }
 }
 
 empurra_caixa = function (){
@@ -111,8 +138,6 @@ if (_caixa != noone)
         {
             _caixa.velh = velh
         }
-          
-    
 }
 }
 
@@ -153,18 +178,11 @@ checha_tranformado = function (){
     	sou_humano--;
         
         if(sou_humano <= 0){
-            sprite_index = spr_monstro;
             human = false;
             sou_humano = tempo_humano;
             
         }
-         
     }
-    else {
-    	sprite_index = spr_player
-    }
-    
-    
 }
 
 #endregion
@@ -176,8 +194,7 @@ parado = function (){
     //CORPO ESTADO
     estado_txt = "parado"
     velh = 0;
-    
-    
+    controla_sprite(0);
     coleta_antidoto();
     checha_tranformado();
     empurra_caixa();
@@ -193,6 +210,7 @@ andando = function (){
     
     //CORPO ESTADO
     estado_txt = "andando"
+    controla_sprite(1);
     coleta_antidoto();
     checha_tranformado();
     empurra_caixa();
@@ -208,6 +226,7 @@ pulando = function (){
     
     //CORPO ESTADO
     estado_txt = "pulando"
+    controla_sprite(0);
     coleta_antidoto();
     checha_tranformado();
     plataforma();
@@ -220,7 +239,7 @@ agachado = function (){
     
     //CORPO ESTADO
     estado_txt = "agachado"
-    sprite_index = spr_player_agachado
+    controla_sprite(2);
     plataforma();
     checha_tranformado();
     
@@ -239,7 +258,7 @@ transforma = function (){
     
     //CORPO ESTADO
     estado_txt = "transforma"
-    sprite_index = spr_monstro;
+    controla_sprite(4);
     //animação de transformação
     // ao fim dela  human = true
     //inicia cronometro

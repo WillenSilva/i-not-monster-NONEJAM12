@@ -6,8 +6,8 @@
   "name":"obj_antidoto",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objetos",
-    "path":"folders/Objetos.yy",
+    "name":"OBJETOS",
+    "path":"folders/Objetos/OBJETOS.yy",
   },
   "parentObjectId":null,
   "persistent":false,
