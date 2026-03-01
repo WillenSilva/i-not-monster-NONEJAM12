@@ -1,1 +1,1 @@
-destino = "Jogar"
+destino = "Sair"

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_funcoes",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_funcoes",
+  "parent":{
+    "name":"NONEJAM12",
+    "path":"NONEJAM12.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

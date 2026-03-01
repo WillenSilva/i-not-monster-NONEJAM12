@@ -1,6 +1,9 @@
 global.allobj = [obj_boxx,obj_colisor,obj_porta]
 global.colisores = [obj_colisor,obj_porta]
 global.menu = layer_get_visible("UiLaiyer_1");
+
+audio_play_sound(snd_music,1,true);
+
 room_atual = noone
 gpu_set_texfilter(false);
 
@@ -11,7 +14,7 @@ checa_room = function() {
     	case rm_menu:
              //desenha_menu()
             break
-        case rm_fase0:
+        case rm_fase0 :
              vence_fase()
             break
         case rm_fase1:
@@ -23,25 +26,10 @@ checa_room = function() {
         case rm_fase3:
              vence_fase()
             break
-        case rm_fase4:
-             vence_fase()
-            break
         case rm_fase5:
              vence_fase()
             break
         case rm_fase6:
-             vence_fase()
-            break
-        case rm_fase7:
-             vence_fase()
-            break
-        case rm_fase8:
-             vence_fase()
-            break
-        case rm_fase9:
-             vence_fase()
-            break
-        case rm_fase10:
              vence_fase()
             break
     }
@@ -85,12 +73,18 @@ desenha_menu = function (){
 
 vence_fase = function (){
     if (object_exists(obj_player)) {
-    	if (obj_player.x > room_width or obj_player.x < 0) {
-        	room_restart()
-            show_message("venceu");
+    	if (obj_player.x > room_width or obj_player.x < 0 or obj_player.y < 0 or obj_player.y > room_height) 
+{
+    
+        	var snd_id = audio_play_sound(snd_venceu, 1, false);
+            
+            if (!audio_is_playing(snd_id))
+            {
+            	 room_goto_next();
+            }
+           
+            
         }
-        
-    } else {
         
     }
     

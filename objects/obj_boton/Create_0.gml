@@ -13,8 +13,8 @@ checa_destino = function (){
                 layer_set_visible("UiLayer_1", 0)
             break;
         
-        case "creditos":
-            
+        case "Sair":
+                game_end();
             break;
     }
 }

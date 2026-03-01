@@ -13,7 +13,7 @@ chao = noone;
 //MAQUINA DE ESTADO
 estado = noone
 estado_txt = "parado";
-tempo_humano = game_get_speed(gamespeed_fps) * 5
+tempo_humano = game_get_speed(gamespeed_fps) * 3;
 sou_humano = tempo_humano
 human = false;
 
@@ -69,11 +69,11 @@ controla_sprite = function (_index){
 checa_chao = function (){
   
     
-    if (place_meeting(x,y,obj_colisor))
-        {
-    	 controla_sprite(5)
-        }
-    
+    //if (place_meeting(x,y,obj_colisor))
+        //{
+    	 //
+        //}
+    //
    if(place_meeting(x,y + 1, obj_colisor)) chao = true;
     else{
         chao = false;
@@ -99,8 +99,8 @@ pega_controle = function() {
     up      = keyboard_check(ord("W"));
     down    = keyboard_check(ord("S"));
     right   = keyboard_check(ord("D"));
-    action  = keyboard_check(ord("E"))
-    agacha  = keyboard_check_pressed(ord("G"))
+    action  = keyboard_check(ord("J"))
+    agacha  = keyboard_check_pressed(ord("K"))
 }
 
 plataforma = function (){
@@ -109,8 +109,12 @@ plataforma = function (){
     
     velh = (right - left) * maxvel
     
-    if(jump && chao && human && estado != agachado)velv -= maxvel * forc ;
+    if(jump && chao && human) {
         
+        velv -= maxvel * forc; 
+        audio_play_sound(snd_jump,1,false);
+         estado = pulando; 
+    }
     if (agacha && human && chao) estado = agachado;
     
     
@@ -119,8 +123,8 @@ plataforma = function (){
         move_and_collide(0,velv,global.colisores,24);
     }
     else { 
-        move_and_collide(velh,0,global.allobj,4);
-        move_and_collide(0,velv,global.allobj,4);
+        move_and_collide(velh,0,global.allobj,24);
+        move_and_collide(0,velv,global.allobj,24);
     }
 }
 
@@ -137,9 +141,7 @@ empurra_caixa = function (){
     	velv = 0
         grav = 0
         
-        if(jump){
-        velv -= maxvel* 2
-    }}
+        }
     
 if (_caixa != noone)
 {
@@ -174,7 +176,7 @@ quebra_porta =  function (){
 }
 
 coleta_antidoto = function (){
-    var _anti = instance_place(x + velh, y + 1, obj_antidoto)
+    var _anti = instance_place(x, y, obj_antidoto)
     
     if (_anti and !human) {
     	with (_anti) {
@@ -190,9 +192,15 @@ checha_tranformado = function (){
     	sou_humano--;
         
         if(sou_humano <= 0){
+            if (!place_meeting(x,y - 10, obj_colisor)) {
+            velh  = 0;
             human = false;
             sou_humano = tempo_humano;
-            
+                
+            }else {
+                audio_play_sound(snd_reset,1,false); 
+            	room_restart();
+            }
         }
     }
 }
@@ -215,7 +223,10 @@ parado = function (){
     
     //SAIDA ESTADO
     if(left or right ) estado = andando;
-    if(jump && human) estado = pulando;
+    if(jump && human ){
+        audio_play_sound(snd_jump,1,false); 
+        estado = pulando;
+    }
 }
 
 andando = function (){
@@ -231,7 +242,7 @@ andando = function (){
     
     //SAIDA ESTADO
     if(velh == 0 )estado = parado;
-        if(jump and human) estado = pulando;
+        
 }
 
 pulando = function (){
@@ -259,7 +270,10 @@ agachado = function (){
     if (agacha) {
     	estado = parado;
     }
-    
+    if(jump) {
+        audio_play_sound(snd_jump,1,false); 
+        estado = pulando;
+    }
     if (!human) {
     	estado = parado;
     }
@@ -270,16 +284,19 @@ transforma = function (){
     
     //CORPO ESTADO
     estado_txt = "transforma"
-    controla_sprite(4);
+    controla_sprite(5);
+    audio_play_sound(snd_jump,1,false); 
+    velh = 0;
     //animação de transformação
     // ao fim dela  human = true
     //inicia cronometro
     // pode andar
     //pode pular
-    human = true;
-    
     //SAIDA ESTADO
-    estado = parado;
+     if (fim_da_animacao()) {
+    	human = true;
+        estado = parado;
+    }
 }
 
 estado = parado;
