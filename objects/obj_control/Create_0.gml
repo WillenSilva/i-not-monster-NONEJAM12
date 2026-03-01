@@ -1,11 +1,15 @@
+global.allobj = [obj_boxx,obj_colisor,obj_porta]
+global.colisores = [obj_colisor,obj_porta]
+global.menu = layer_get_visible("UiLaiyer_1");
 room_atual = noone
+gpu_set_texfilter(false);
 
 checa_room = function() {
     room_atual = room
     
     switch (room_atual) {
     	case rm_menu:
-             desenha_menu()
+             //desenha_menu()
             break
         case rm_fase0:
              vence_fase()

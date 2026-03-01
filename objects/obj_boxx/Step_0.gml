@@ -1,6 +1,12 @@
+if (!place_meeting(x,y+1,obj_colisor)) {
+    velv += grav
+}
+else {
+	velv = 0;
+}
+
 if (!place_meeting(x + velh,y, obj_player)) velh = 0;
-if (!place_meeting(x,y, obj_player)) velv = 0;
-    
+   
 if (place_meeting(x + velh,y, obj_colisor)) travado = true;
     
 

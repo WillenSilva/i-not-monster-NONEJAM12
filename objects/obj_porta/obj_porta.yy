@@ -12,10 +12,7 @@
     "name":"OBJETOS",
     "path":"folders/Objetos/OBJETOS.yy",
   },
-  "parentObjectId":{
-    "name":"obj_colisor",
-    "path":"objects/obj_colisor/obj_colisor.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

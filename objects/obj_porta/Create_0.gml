@@ -1,1 +1,2 @@
-dura = 1;
+dura = 0;
+levei = false

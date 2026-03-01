@@ -3,8 +3,8 @@ velh    = 0;
 velv    = 0;
 acel    = 0.5
 grav    = 0
-maxvel  = 5;
-forc    = 2
+maxvel  = 2;
+forc    = 4;
 
 //PLATAFORMA
 chao = noone;
@@ -25,19 +25,22 @@ up    = false;
 down  = false;
 action = false;
 agacha = false;
+face = 0;
 
 //ANIMAÇÃO E SPRITES
 sprites = [
-     //SPRITE PARADO
-    [spr_player_idle,spr_monstro_idle],
+     //SPRITE PARADO 
+    [spr_player_idle,spr_player2_idle],
     //SSPRITE ANDANDO 
-    [spr_player_idle,spr_monstro_idle],
+    [spr_player_andando,spr_player2_andando],
     //SPRITE AGACHADO
     [0,spr_player_agachado],
     //SPRITE PULANDO
-    [spr_player_idle,spr_monstro_idle],
+    [spr_player_idle,spr_player2_idle],
     //SPRITE TRANFORMAÇÃO
-    [spr_player_idle,spr_monstro_idle]
+    [spr_player_idle,spr_player2_idle],
+    //SPRITE ataque
+    [spr_player_ataque]
                                     ];
 sprite  = noone
 
@@ -48,12 +51,19 @@ controla_sprite = function (_index){
     //variaveis de controle
     var _spr_modo = human
     
-     if(velh > 0) image_xscale = 1;
-     if(velh < 0) image_xscale = -1;
+    if (velh > 0) {
+        face = 0
+    }
+    else {
+    	face = 1
+    }
+     
         
     sprite = sprites[_index,_spr_modo]
     
     sprite_index = sprite;
+    if(face = 0) image_xscale = 1; 
+        if(face = 1) image_xscale = -1;
 }
 
 checa_chao = function (){
@@ -61,7 +71,7 @@ checa_chao = function (){
     
     if (place_meeting(x,y,obj_colisor))
         {
-    	 room_restart();
+    	 controla_sprite(5)
         }
     
    if(place_meeting(x,y + 1, obj_colisor)) chao = true;
@@ -105,12 +115,12 @@ plataforma = function (){
     
     
     if (!human) {
-        move_and_collide(velh,0,obj_colisor,12);
-        move_and_collide(0,velv,obj_colisor,12);
+        move_and_collide(velh,0,global.colisores,24);
+        move_and_collide(0,velv,global.colisores,24);
     }
     else { 
-        move_and_collide(velh,0,all,12);
-        move_and_collide(0,velv,all,12);
+        move_and_collide(velh,0,global.allobj,4);
+        move_and_collide(0,velv,global.allobj,4);
     }
 }
 
@@ -143,17 +153,19 @@ if (_caixa != noone)
 
 quebra_porta =  function (){
     pega_controle();
+    
     if(action and !human){
-        
     var _dir    = point_direction(x,y,x + velh,y)    
-    var _hit_box = instance_create_layer(x,y - 32, "Instances", obj_hit);
-    if (velh > 0) _hit_box.image_xscale = 1;
-    if (velh < 0) _hit_box.image_xscale = -1;
+    var _hit_box = instance_create_layer(x,y - 32, "Instances", obj_hit); 
+    if (right = 0) _hit_box.image_xscale = 1;
+    if (left= 1) _hit_box.image_xscale = -1;
         
     with (_hit_box) {
     	 var _porta = instance_place(x,y,obj_porta);
         if(_porta != noone) {
-            _porta.dura = 0;
+            _porta.x += lengthdir_x(10,_dir);
+            _porta.dura = 30;
+            _porta.levei = true;
             
         }
         
